@@ -5,16 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Item : MonoBehaviour
 {
+    public int ID;
+    public int MeritAddition;
+    public float MeritMultiply;
     public Transform ItemTrans;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

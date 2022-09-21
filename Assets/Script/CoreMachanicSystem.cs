@@ -36,7 +36,7 @@ public class CoreMachanicSystem : MonoSingleton<CoreMachanicSystem>
                     if (Input.GetMouseButtonDown(0))
                     {
                         Debug.Log("Push!");
-                        GameManager.Instance.Merit++;
+                        GameManager.Instance.Merit += GameManager.Instance.GetMeritStrength();
                         rb.AddForce(Direction * PushForce);
                     }
                 }

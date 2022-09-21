@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ItemSpawner : MonoSingleton<ItemSpawner>
+{
+    private Queue<UpgradeItem> SpawnQueue;
+    [SerializeField] private Transform SpawnParent;
+
+    private void Start()
+    {
+        SpawnQueue = new();
+    }
+
+    void Update()
+    {
+        Spawn();
+    }
+
+    private void Spawn()
+    {
+        if (SpawnQueue.Count > 0)
+        {
+            UpgradeItem iScriptableObject = SpawnQueue.Dequeue();
+            GameObject go = Instantiate(iScriptableObject.ItemPrefab, SpawnParent);
+            Item iScript = go.GetComponent<Item>();
+            iScript.ID = iScriptableObject.ID;
+            iScript.MeritAddition = iScriptableObject.MeritAddition;
+            iScript.MeritMultiply = iScriptableObject.MeritMultiply;
+            GameManager.Instance.ItemListAdd(go);
+        }
+    }
+
+    public void AddSpawnEvent(UpgradeItem item)
+    {
+        SpawnQueue.Enqueue(item);
+    }
+}
