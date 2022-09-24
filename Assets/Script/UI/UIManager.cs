@@ -23,7 +23,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] CanvasGroup SidebarCanvasGroup;
     [SerializeField] CanvasGroup StartMenuCanvasGroup;
     [SerializeField] CanvasGroup MeritCountUI;
-    [SerializeField] GameObject Content;
+    [SerializeField] Transform ContentTrans;
 
     private void Start()
     {
@@ -90,12 +90,31 @@ public class UIManager : MonoSingleton<UIManager>
     
     private void SidebarEnabledControl()
     {
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && !MenuEnabled)
+        if (EventSystem.current.IsPointerOverGameObject() && !MenuEnabled)
         {
             EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = Input.mousePosition }, RayResult);
             if (RayResult.Count > 0)
             {
-                SidebarEnabled = (RayResult[0].gameObject.transform.parent.gameObject.name == "Sidebar");
+                bool result = false;
+                GameObject GoPointerAt = RayResult[0].gameObject;
+                GameObject GoPointerAtParent = GoPointerAt.transform.parent.gameObject;
+                if (GoPointerAtParent.name == "Sidebar")
+                {
+                    result = true;
+                }
+                else
+                {
+                    foreach(Transform i in ContentTrans)
+                    {
+                        if(GoPointerAt == i.gameObject)
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+                Debug.Log(GoPointerAt.name);
+                SidebarEnabled = result;
             }
         }
         else
@@ -116,6 +135,6 @@ public class UIManager : MonoSingleton<UIManager>
         {
             SidebarCanvasGroup.alpha = 1;
         }
-        Content.SetActive(SidebarEnabled);
+        ContentTrans.gameObject.SetActive(SidebarEnabled);
     }
 }

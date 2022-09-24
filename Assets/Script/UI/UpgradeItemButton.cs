@@ -10,7 +10,7 @@ public class UpgradeItemButton : MonoBehaviour
     public float MeritMultiply;
     public float MeritAddition;
     [SerializeField] UpgradeItem upgradeItem;
-    TextMeshProUGUI Name;
+    [SerializeField] TextMeshProUGUI Name;
     [SerializeField] TextMeshProUGUI PriceNumber;
 
     public UpgradeItemButton()
@@ -25,7 +25,7 @@ public class UpgradeItemButton : MonoBehaviour
     protected virtual void Start()
     {
         SetCostNumber(GetClickCost());
-        Name.text = upgradeItem.name;
+        Name.text = upgradeItem.ItemName;
     }
 
     private void SetCostNumber(float Number)

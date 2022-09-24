@@ -4,7 +4,7 @@ using UnityEngine;
 public class UpgradeItem : ScriptableObject
 {
     public int ID;
-    public string Name;
+    public string ItemName;
     public GameObject ItemPrefab;
 
     public UpgradeItem()
