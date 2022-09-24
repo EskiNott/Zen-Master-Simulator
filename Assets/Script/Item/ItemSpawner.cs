@@ -26,7 +26,7 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
             GameObject go = Instantiate(iScriptableObject.ItemPrefab, SpawnerTrans.position, SpawnerTrans.rotation, SpawnParent);
             Item iScript = go.GetComponent<Item>();
             iScript.ID = iScriptableObject.ID;
-            GameManager.Instance.ItemListAdd(go);
+            GameManager.Instance.MaxItemCheck();
         }
     }
 

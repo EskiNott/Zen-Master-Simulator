@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    [SerializeField] private Transform ItemParent;
+    public int MaxItemExist = 20;
+
     [SerializeField] private float Merit;
     [SerializeField] private float MeritStrength = 1;
-
-    [SerializeField] private List<GameObject> ItemList;
 
     [SerializeField] private GameObject Border;
 
@@ -25,7 +26,6 @@ public class GameManager : MonoSingleton<GameManager>
     public void GameInit()
     {
         Merit = 0;
-        ItemList = new();
         Border.SetActive(true);
         MeritCountUICG.alpha = 0;
         SidebarCanvasGroup.alpha = 0;
@@ -43,6 +43,7 @@ public class GameManager : MonoSingleton<GameManager>
         return MeritStrength;
     }
 
+
     public void IncreaseMerit(float Count)
     {
         Merit += Count;
@@ -54,6 +55,7 @@ public class GameManager : MonoSingleton<GameManager>
         if (Merit >= Count)
         {
             Merit -= Count;
+            UIManager.Instance.SetMeritCountUIText(Merit);
             return true;
         }
         else
@@ -62,8 +64,14 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void ItemListAdd(GameObject go)
+    public void MaxItemCheck()
     {
-        ItemList.Add(go);
+        if(ItemParent.childCount > MaxItemExist)
+        {
+            for(int i = 0;i< ItemParent.childCount - MaxItemExist; i++)
+            {
+                Destroy(ItemParent.GetChild(1).gameObject);
+            }
+        }
     }
 }
