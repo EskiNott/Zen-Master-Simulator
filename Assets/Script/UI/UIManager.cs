@@ -20,6 +20,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private List<RaycastResult> RayResult;
 
+    [SerializeField] Transform Canvas2D;
     [SerializeField] Transform Sidebar;
     [SerializeField] CanvasGroup SidebarCanvasGroup;
     [SerializeField] CanvasGroup StartMenuCanvasGroup;
@@ -102,25 +103,27 @@ public class UIManager : MonoSingleton<UIManager>
             EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = Input.mousePosition }, RayResult);
             if (RayResult.Count > 0)
             {
-                bool result = false;
-                GameObject GoPointerAt = RayResult[0].gameObject;
-                GameObject GoPointerAtParent = GoPointerAt.transform.parent.gameObject;
-                if (GoPointerAtParent.name == "Sidebar")
-                {
-                    result = true;
-                }
-                else
-                {
-                    foreach(Transform i in ContentTrans)
-                    {
-                        if(GoPointerAt == i.gameObject)
-                        {
-                            result = true;
-                            break;
-                        }
-                    }
-                }
-                SidebarEnabled = result;
+                /*                bool result = false;
+                                GameObject GoPointerAt = RayResult[0].gameObject;
+                                GameObject GoPointerAtParent = GoPointerAt.transform.parent.gameObject;
+                                if (GoPointerAtParent.name == "Sidebar")
+                                {
+                                    result = true;
+                                }
+                                else
+                                {
+                                    foreach(Transform i in ContentTrans)
+                                    {
+                                        if(GoPointerAt == i.gameObject)
+                                        {
+                                            result = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                SidebarEnabled = result;*/
+                Debug.Log(RayResult[0].gameObject.name);
+                SidebarEnabled = GameManager.IsChildHasParent(RayResult[0].gameObject.transform, Canvas2D, Sidebar);
             }
         }
         else

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
@@ -73,5 +74,31 @@ public class GameManager : MonoSingleton<GameManager>
                 Destroy(ItemParent.GetChild(1).gameObject);
             }
         }
+    }
+
+    public static bool IsChildHasParent(Transform child, Transform endPoint,Transform target)
+    {
+        bool found = false;
+        Transform test = child;
+        if (test == target)
+        {
+            found = true;
+        }
+        else
+        {
+            while (test != null && endPoint != null && test != endPoint)
+            {
+                if(test == target)
+                {
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    test = test.parent;
+                }
+            }
+        }
+        return found;
     }
 }
