@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a61e8b61d36c14e42a5bb42d199855dc, type: 3}
-  m_Name: Scripture
+  m_Name: WoodenFish
   m_EditorClassIdentifier: 
-  ID: 2
-  Name: Scripture
-  ItemPrefab: {fileID: 4634085450515624078, guid: bb10939bf9f546d4282786e74e8cfeb0,
-    type: 3}
+  ID: 1
+  Name: 
+  ItemPrefab: {fileID: 0}

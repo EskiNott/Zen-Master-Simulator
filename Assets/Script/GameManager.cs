@@ -26,9 +26,10 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Merit = 0;
         ItemList = new();
-        MeritCountUICG.alpha = 0;
         Border.SetActive(true);
+        MeritCountUICG.alpha = 0;
         SidebarCanvasGroup.alpha = 0;
+        StartMenu.alpha = 0;
     }
 
     public void SendMeritStrenghIncrease(float Addition = 0,float Multiply = 1)
