@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Scripture
   m_EditorClassIdentifier: 
   ID: 2
-  Name: Scripture
+  ItemName: Scripture
   ItemPrefab: {fileID: 4634085450515624078, guid: bb10939bf9f546d4282786e74e8cfeb0,
     type: 3}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Candle
   m_EditorClassIdentifier: 
   ID: 3
-  Name: Candle
+  ItemName: Candle
   ItemPrefab: {fileID: 1570017124405614502, guid: a331414f7257527429d9070d2475f568,
     type: 3}

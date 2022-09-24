@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: WoodenFish
   m_EditorClassIdentifier: 
   ID: 1
-  Name: 
-  ItemPrefab: {fileID: 0}
+  ItemName: WoodenFish
+  ItemPrefab: {fileID: 6041670454542587613, guid: 6bb28c5217c24eb4f95ce9c89a090022,
+    type: 3}
