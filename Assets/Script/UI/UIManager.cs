@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] CanvasGroup SidebarCanvasGroup;
     [SerializeField] CanvasGroup StartMenuCanvasGroup;
     [SerializeField] CanvasGroup MeritCountUI;
+    [SerializeField] TextMeshProUGUI MeritCountText;
     [SerializeField] Transform ContentTrans;
 
     private void Start()
@@ -56,8 +58,8 @@ public class UIManager : MonoSingleton<UIManager>
         if (StartMenuCanvasGroup.gameObject.activeSelf)
         {
             StartMenuCanvasGroup.alpha = MenuEnabled ?
-                Mathf.Lerp(StartMenuCanvasGroup.alpha, 1, Time.deltaTime * UIChangeSpeed * 1/2) :
-                Mathf.Lerp(StartMenuCanvasGroup.alpha, 0, Time.deltaTime * UIChangeSpeed);
+                Mathf.Lerp(StartMenuCanvasGroup.alpha, 1, Time.deltaTime * UIChangeSpeed * 1 / 4) :
+                Mathf.Lerp(StartMenuCanvasGroup.alpha, 0, Time.deltaTime * UIChangeSpeed * 1 / 4);
             if (StartMenuCanvasGroup.alpha <= 0.02 && StartClicked)
             {
                 StartMenuCanvasGroup.gameObject.SetActive(false);
@@ -70,6 +72,11 @@ public class UIManager : MonoSingleton<UIManager>
         StartClicked = true;
     }
 
+    public void SetMeritCountUIText(float count)
+    {
+        MeritCountText.text = count.ToString();
+    }
+
     private void MeritCountUIChange()
     {
         if(MeritCountUI.alpha >= 0.995)
@@ -77,8 +84,8 @@ public class UIManager : MonoSingleton<UIManager>
             return;
         }
         MeritCountUI.alpha = MenuEnabled ?
-            Mathf.Lerp(MeritCountUI.alpha, 0, Time.deltaTime * UIChangeSpeed * 1 / 3) :
-            Mathf.Lerp(MeritCountUI.alpha, 1, Time.deltaTime * UIChangeSpeed * 1 / 3);
+            Mathf.Lerp(MeritCountUI.alpha, 0, Time.deltaTime * UIChangeSpeed * 1 / 4) :
+            Mathf.Lerp(MeritCountUI.alpha, 1, Time.deltaTime * UIChangeSpeed * 1 / 4);
     }
 
 /*    private void SidebarMoving()
@@ -113,7 +120,6 @@ public class UIManager : MonoSingleton<UIManager>
                         }
                     }
                 }
-                Debug.Log(GoPointerAt.name);
                 SidebarEnabled = result;
             }
         }
@@ -126,8 +132,8 @@ public class UIManager : MonoSingleton<UIManager>
     private void SidebarChange()
     {
         SidebarCanvasGroup.alpha = SidebarEnabled?
-            Mathf.Lerp(SidebarCanvasGroup.alpha, 1, Time.deltaTime * UIChangeSpeed * 4) :
-            Mathf.Lerp(SidebarCanvasGroup.alpha, 0, Time.deltaTime * UIChangeSpeed * 4);
+            Mathf.Lerp(SidebarCanvasGroup.alpha, 1, Time.deltaTime * UIChangeSpeed * 2) :
+            Mathf.Lerp(SidebarCanvasGroup.alpha, 0, Time.deltaTime * UIChangeSpeed * 2);
         if(SidebarCanvasGroup.alpha <= 0.02)
         {
             SidebarCanvasGroup.alpha = 0;

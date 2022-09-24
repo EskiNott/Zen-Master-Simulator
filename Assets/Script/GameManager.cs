@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    private float Merit;
-    private float MeritStrength = 1;
+    [SerializeField] private float Merit;
+    [SerializeField] private float MeritStrength = 1;
 
     [SerializeField] private List<GameObject> ItemList;
 
@@ -46,6 +46,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void IncreaseMerit(float Count)
     {
         Merit += Count;
+        UIManager.Instance.SetMeritCountUIText(Merit);
     }
 
     public bool DecreaseMerit(float Count)
