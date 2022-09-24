@@ -144,6 +144,14 @@ public class UIManager : MonoSingleton<UIManager>
         {
             SidebarCanvasGroup.alpha = 1;
         }
-        ContentTrans.gameObject.SetActive(SidebarEnabled);
+        SetItemUIRaycast(ContentTrans, SidebarEnabled);
+    }
+
+    private void SetItemUIRaycast(Transform Parent,bool situation)
+    {
+        foreach(Transform trans in Parent)
+        {
+            trans.GetComponent<UnityEngine.UI.Image>().raycastTarget = situation;
+        }
     }
 }
