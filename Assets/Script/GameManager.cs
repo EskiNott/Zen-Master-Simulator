@@ -5,21 +5,36 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public float Merit;
-    public TextMeshProUGUI MeritText;
-    [SerializeField] private List<GameObject> ItemList;
+    private float Merit;
     private float MeritStrength = 1;
+
+    [SerializeField] private List<GameObject> ItemList;
+
+    [SerializeField] private GameObject Border;
+
+    [SerializeField] private CanvasGroup MeritCountUICG;
+    [SerializeField] private CanvasGroup SidebarCanvasGroup;
+    [SerializeField] private CanvasGroup StartMenu;
     // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
+    {
+        base.Awake();
+        GameInit();
+    }
+
+    public void GameInit()
     {
         Merit = 0;
         ItemList = new();
+        MeritCountUICG.alpha = 0;
+        Border.SetActive(true);
+        SidebarCanvasGroup.alpha = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SendMeritStrenghIncrease(float Addition = 0,float Multiply = 1)
     {
-        MeritText.text = "Merit: " + Merit.ToString();
+        MeritStrength += Addition;
+        MeritStrength *= Multiply;
     }
 
     public float GetMeritStrength()
@@ -27,11 +42,26 @@ public class GameManager : MonoSingleton<GameManager>
         return MeritStrength;
     }
 
+    public void IncreaseMerit(float Count)
+    {
+        Merit += Count;
+    }
+
+    public bool DecreaseMerit(float Count)
+    {
+        if (Merit >= Count)
+        {
+            Merit -= Count;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void ItemListAdd(GameObject go)
     {
-        Item i = go.GetComponent<Item>();
-        MeritStrength += i.MeritAddition;
-        MeritStrength *= i.MeritMultiply;
         ItemList.Add(go);
     }
 }

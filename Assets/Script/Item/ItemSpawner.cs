@@ -26,8 +26,6 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
             GameObject go = Instantiate(iScriptableObject.ItemPrefab, SpawnerTrans.position, SpawnerTrans.rotation, SpawnParent);
             Item iScript = go.GetComponent<Item>();
             iScript.ID = iScriptableObject.ID;
-            iScript.MeritAddition = iScriptableObject.MeritAddition;
-            iScript.MeritMultiply = iScriptableObject.MeritMultiply;
             GameManager.Instance.ItemListAdd(go);
         }
     }

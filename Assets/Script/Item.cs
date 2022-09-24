@@ -5,8 +5,6 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public int ID;
-    public int MeritAddition;
-    public float MeritMultiply;
     public Transform ItemTrans;
     public Collider ItemCollider;
     public Rigidbody ItemRigidbody;

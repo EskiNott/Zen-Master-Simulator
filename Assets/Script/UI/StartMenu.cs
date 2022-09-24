@@ -8,6 +8,7 @@ public class StartMenu : MonoBehaviour
     public void StartButtonClicked()
     {
         UIManager.Instance.MenuEnabled = false;
+        UIManager.Instance.StartClick();
     }
 
     public void ExitButtonClicked()

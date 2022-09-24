@@ -20,7 +20,6 @@ public class CoreMachanicSystem : MonoSingleton<CoreMachanicSystem>
         RaycastHit hit = RaycastPhysical();
         if (hit.collider != null)
         {
-            Debug.Log("collider != null!");
             GameObject hitObject = hit.collider.gameObject;
             Transform hitTrans = hit.transform;
             if (hitObject.CompareTag("Item"))
@@ -36,7 +35,7 @@ public class CoreMachanicSystem : MonoSingleton<CoreMachanicSystem>
                     if (Input.GetMouseButtonDown(0))
                     {
                         Debug.Log("Push!");
-                        GameManager.Instance.Merit += GameManager.Instance.GetMeritStrength();
+                        GameManager.Instance.IncreaseMerit(GameManager.Instance.GetMeritStrength());
                         rb.AddForce(Direction * PushForce);
                     }
                 }
