@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    [SerializeField] private Transform ItemParent;
     public int MaxItemExist = 20;
+    [SerializeField] private UpgradeItem InitilizationItem;
+    [SerializeField] private UpgradeItemScriptableObjectList UpgradeItemList;
+    [SerializeField] private Transform ItemParent;
 
     [SerializeField] private float Merit;
     [SerializeField] private float MeritStrength = 1;
@@ -17,7 +19,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private CanvasGroup MeritCountUICG;
     [SerializeField] private CanvasGroup SidebarCanvasGroup;
     [SerializeField] private CanvasGroup StartMenu;
-    [SerializeField] private Dictionary<int,int> UpgradeItemData; //UpgradeitemID,ClickTime
+    [SerializeField] private int[] UpgradeItemData; //UpgradeitemID,ClickTime
 
     // Start is called before the first frame update
     protected override void Awake()
@@ -30,11 +32,28 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Merit = 0;
         Border.SetActive(true);
-        UpgradeItemData = new();
         MeritCountUICG.alpha = 0;
         SidebarCanvasGroup.alpha = 0;
         StartMenu.alpha = 0;
+        ArrayInit(ref UpgradeItemData, UpgradeItemList.List.Count);
     }
+
+    public static void ArrayInit<T>(ref T[] Array, int Length)
+    {
+        Array = new T[Length];
+    }
+
+    private void Start()
+    {
+        //StartCoroutine(InitializeItemSpawn(1f));
+        ItemSpawner.Instance.AddSpawnEvent(InitilizationItem);
+    }
+
+/*    IEnumerator InitializeItemSpawn(float Delay)
+    {
+        yield return new WaitForSeconds(Delay);
+        ItemSpawner.Instance.AddSpawnEvent(InitilizationItem);
+    }*/
 
     public void SendMeritStrenghIncrease(float Addition = 0,float Multiply = 1)
     {
@@ -87,7 +106,7 @@ public class GameManager : MonoSingleton<GameManager>
         return UpgradeItemData[key];
     }
 
-    public Dictionary<int, int> GetUpgradeItemData()
+    public int[] GetUpgradeItemData()
     {
         return UpgradeItemData;
     }

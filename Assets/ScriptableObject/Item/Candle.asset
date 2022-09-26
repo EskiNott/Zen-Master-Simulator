@@ -16,3 +16,8 @@ MonoBehaviour:
   ItemName: Candle
   ItemPrefab: {fileID: 1570017124405614502, guid: a331414f7257527429d9070d2475f568,
     type: 3}
+  MeritMultiply: 0
+  MeritAddition: 0
+  DefaultCost: 0
+  CostIncreaseAdditionValue: 2
+  CostIncreaseMultiplyValue: 0

@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7773db2e16092ab47b6b56baca406776, type: 3}
   m_Name: UpgradeItemList
   m_EditorClassIdentifier: 
-  List: []
+  List:
+  - {fileID: 11400000, guid: a84f5aa499c39f743b79f4e1c934cc7c, type: 2}
+  - {fileID: 11400000, guid: 3409dcdfed37e3f4da6712007acbf477, type: 2}
+  - {fileID: 11400000, guid: 82309fa011bdfe345b55a9aae879d409, type: 2}

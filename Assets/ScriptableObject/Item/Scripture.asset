@@ -16,3 +16,8 @@ MonoBehaviour:
   ItemName: Scripture
   ItemPrefab: {fileID: 4634085450515624078, guid: bb10939bf9f546d4282786e74e8cfeb0,
     type: 3}
+  MeritMultiply: 0
+  MeritAddition: 0
+  DefaultCost: 0
+  CostIncreaseAdditionValue: 3
+  CostIncreaseMultiplyValue: 0

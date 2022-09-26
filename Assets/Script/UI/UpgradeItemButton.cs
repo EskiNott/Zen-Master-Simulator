@@ -49,10 +49,9 @@ public class UpgradeItemButton : MonoBehaviour
     public float GetClickCost()
     {
         int Time = GameManager.Instance.GetUpgradeItemDataValue(upgradeItem.ID);
-        return (DefaultClickCost + 
+        return (DefaultClickCost +
             Time * ClickCostIncreaseAddition()) *
-            Time > 0 ? 
-            Time * (1 + ClickCostIncreaseMultiply()) : 1;
+            Mathf.Pow(1 + ClickCostIncreaseMultiply(), Time);
     }
 
     public virtual void IncreaseMeritStrength()
@@ -60,9 +59,8 @@ public class UpgradeItemButton : MonoBehaviour
         GameManager.Instance.SendMeritStrenghIncrease(MeritAddition, MeritMultiply);
     }
 
-    public virtual void CostIncrease()
+    public virtual void CostUpdate()
     {
-        GameManager.Instance.SetUpgradeItemData(upgradeItem.ID, GameManager.Instance.GetUpgradeItemDataValue(upgradeItem.ID) + 1);
         SetCostNumber(GetClickCost());
     }
     
