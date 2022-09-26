@@ -17,6 +17,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private CanvasGroup MeritCountUICG;
     [SerializeField] private CanvasGroup SidebarCanvasGroup;
     [SerializeField] private CanvasGroup StartMenu;
+    [SerializeField] private Dictionary<int,int> UpgradeItemData; //UpgradeitemID,ClickTime
+
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -28,6 +30,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Merit = 0;
         Border.SetActive(true);
+        UpgradeItemData = new();
         MeritCountUICG.alpha = 0;
         SidebarCanvasGroup.alpha = 0;
         StartMenu.alpha = 0;
@@ -36,14 +39,13 @@ public class GameManager : MonoSingleton<GameManager>
     public void SendMeritStrenghIncrease(float Addition = 0,float Multiply = 1)
     {
         MeritStrength += Addition;
-        MeritStrength *= Multiply;
+        MeritStrength *= 1 + Multiply;
     }
 
     public float GetMeritStrength()
     {
         return MeritStrength;
     }
-
 
     public void IncreaseMerit(float Count)
     {
@@ -64,7 +66,6 @@ public class GameManager : MonoSingleton<GameManager>
             return false;
         }
     }
-
     public void MaxItemCheck()
     {
         if(ItemParent.childCount > MaxItemExist)
@@ -74,6 +75,21 @@ public class GameManager : MonoSingleton<GameManager>
                 Destroy(ItemParent.GetChild(1).gameObject);
             }
         }
+    }
+
+    public void SetUpgradeItemData(int key,int value)
+    {
+        UpgradeItemData[key] = value;
+    }
+
+    public int GetUpgradeItemDataValue(int key)
+    {
+        return UpgradeItemData[key];
+    }
+
+    public Dictionary<int, int> GetUpgradeItemData()
+    {
+        return UpgradeItemData;
     }
 
     public static bool IsChildHasParent(Transform child, Transform endPoint,Transform target)

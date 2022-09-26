@@ -1,31 +1,34 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class UpgradeItemButton : MonoBehaviour
 {
-    public float DefaultClickCost;
-    private int Time_Multiply;
-    private int Time_Addition;
-    public float MeritMultiply;
-    public float MeritAddition;
+    private float DefaultClickCost;
+    private float ClickCostIncreaseAdditionValue;
+    private float ClickCostIncreaseMultiplyValue;
+    private float MeritMultiply;
+    private float MeritAddition;
     [SerializeField] UpgradeItem upgradeItem;
     [SerializeField] TextMeshProUGUI Name;
     [SerializeField] TextMeshProUGUI PriceNumber;
 
-    public UpgradeItemButton()
-    {
-        DefaultClickCost = 1;
-        Time_Addition = 0;
-        Time_Multiply = 0;
-        MeritMultiply = 1;
-        MeritAddition = 0;
-    }
-
     protected virtual void Start()
     {
+        GameManager.Instance.SetUpgradeItemData(upgradeItem.ID, 0);
+        SetDefaultValue();
         SetCostNumber(GetClickCost());
         Name.text = upgradeItem.ItemName;
+    }
+
+    private void SetDefaultValue()
+    {
+        DefaultClickCost = upgradeItem.DefaultCost;
+        ClickCostIncreaseAdditionValue = upgradeItem.CostIncreaseAdditionValue;
+        ClickCostIncreaseMultiplyValue = upgradeItem.CostIncreaseMultiplyValue;
+        MeritMultiply = upgradeItem.MeritMultiply;
+        MeritAddition = upgradeItem.MeritAddition;
     }
 
     private void SetCostNumber(float Number)
@@ -35,20 +38,21 @@ public class UpgradeItemButton : MonoBehaviour
 
     protected virtual float ClickCostIncreaseAddition()
     {
-        return 0;
+        return ClickCostIncreaseAdditionValue;
     }
 
     protected virtual float ClickCostIncreaseMultiply()
     {
-        return 0.5f;
+        return ClickCostIncreaseMultiplyValue;
     }
 
     public float GetClickCost()
     {
-        return (DefaultClickCost +
-            Time_Addition * ClickCostIncreaseAddition()) *
-            Time_Multiply > 0 ? 
-            Time_Multiply * ClickCostIncreaseMultiply() : 1;
+        int Time = GameManager.Instance.GetUpgradeItemDataValue(upgradeItem.ID);
+        return (DefaultClickCost + 
+            Time * ClickCostIncreaseAddition()) *
+            Time > 0 ? 
+            Time * (1 + ClickCostIncreaseMultiply()) : 1;
     }
 
     public virtual void IncreaseMeritStrength()
@@ -58,8 +62,7 @@ public class UpgradeItemButton : MonoBehaviour
 
     public virtual void CostIncrease()
     {
-        Time_Addition++;
-        Time_Multiply++;
+        GameManager.Instance.SetUpgradeItemData(upgradeItem.ID, GameManager.Instance.GetUpgradeItemDataValue(upgradeItem.ID) + 1);
         SetCostNumber(GetClickCost());
     }
     
