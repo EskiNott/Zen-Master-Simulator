@@ -5,7 +5,7 @@ using static UnityEditor.Progress;
 
 public class ItemSpawner : MonoSingleton<ItemSpawner>
 {
-    private Queue<UpgradeItem> SpawnQueue;
+    private Queue<SpawnEvent> SpawnQueue;
     [SerializeField] private Transform SpawnerTrans;
     [SerializeField] private Transform SpawnParent;
 
@@ -42,18 +42,33 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
     {
         if (SpawnQueue.Count > 0)
         {
-            UpgradeItem upgradeItem = SpawnQueue.Dequeue();
-            GameManager.Instance.SetUpgradeItemData(upgradeItem.ID, GameManager.Instance.GetUpgradeItemDataValue(upgradeItem.ID) + 1);
-            GameObject go = Instantiate(upgradeItem.ItemPrefab, SpawnerTrans.position, SpawnerTrans.rotation, SpawnParent);
+            SpawnEvent Event = SpawnQueue.Dequeue();
+            GameManager.Instance.SetUpgradeItemData(Event.item.ID, GameManager.Instance.GetUpgradeItemDataValue(Event.item.ID) + 1);
+            GameObject go = Instantiate(Event.item.ItemPrefab, SpawnerTrans.position, SpawnerTrans.rotation, SpawnParent);
             Item item = go.GetComponent<Item>();
-            item.ID = upgradeItem.ID;
+            item.ID = Event.item.ID;
+            if (Event.Button != null)
+            {
+                Event.Button.CostUpdate();
+            }
             GameManager.Instance.MaxItemCheck();
         }
     }
 
-    public void AddSpawnEvent(UpgradeItem item)
+    public void AddSpawnEvent(SpawnEvent Event)
     {
-        if(item != null)
-        SpawnQueue.Enqueue(item);
+        if(Event.item != null)
+        SpawnQueue.Enqueue(Event);
+    }
+
+    public class SpawnEvent
+    {
+        public UpgradeItem item;
+        public UpgradeItemButton Button;
+        public SpawnEvent(UpgradeItem i, UpgradeItemButton button = null)
+        {
+            this.item = i;
+            Button = button;
+        }
     }
 }

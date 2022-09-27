@@ -46,7 +46,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         //StartCoroutine(InitializeItemSpawn(1f));
-        ItemSpawner.Instance.AddSpawnEvent(InitilizationItem);
+        ItemSpawner.Instance.AddSpawnEvent(new ItemSpawner.SpawnEvent(InitilizationItem));
     }
 
 /*    IEnumerator InitializeItemSpawn(float Delay)
