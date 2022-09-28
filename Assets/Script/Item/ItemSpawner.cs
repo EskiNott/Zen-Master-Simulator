@@ -35,6 +35,7 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
 
     private void ItemObjectSpawn()
     {
+        int[] ItemObjectsDuplicate = (int[])GameManager.Instance.GetUpgradeItemData().Clone();
         
     }
 
@@ -59,6 +60,14 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
     {
         if(Event.item != null)
         SpawnQueue.Enqueue(Event);
+    }
+
+    public void AddSpawnEvent(UpgradeItem item, UpgradeItemButton button = null)
+    {
+        if (item != null)
+        {
+            SpawnQueue.Enqueue(new SpawnEvent(item, button));
+        }
     }
 
     public class SpawnEvent
