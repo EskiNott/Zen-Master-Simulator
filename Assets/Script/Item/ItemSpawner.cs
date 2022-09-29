@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -8,6 +9,7 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
     private Queue<SpawnEvent> SpawnQueue;
     [SerializeField] private Transform SpawnerTrans;
     [SerializeField] private Transform SpawnParent;
+    [SerializeField] private UpgradeItemScriptableObjectList ItemList;
 
     protected override void Awake()
     {
@@ -35,8 +37,30 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
 
     private void ItemObjectSpawn()
     {
+        int ItemCount = 0;
         int[] ItemObjectsDuplicate = (int[])GameManager.Instance.GetUpgradeItemData().Clone();
-        
+        foreach(int item in ItemObjectsDuplicate)
+        {
+            ItemCount += item;
+        }
+        if (ItemCount > GameManager.Instance.MaxItemExist)
+        {
+            int Max = GameManager.Instance.MaxItemExist;
+            for(int i = 0; i < Max;)
+            {
+                int index = UnityEngine.Random.Range(0, ItemObjectsDuplicate.Length);
+                if (ItemObjectsDuplicate[index] > 0)
+                {
+                    ItemObjectsDuplicate[index]--;
+                    AddSpawnEvent(index);
+                    i++;
+                }
+            }
+        }
+        else
+        {
+
+        }
     }
 
     private void Spawn()
@@ -60,6 +84,14 @@ public class ItemSpawner : MonoSingleton<ItemSpawner>
     {
         if(Event.item != null)
         SpawnQueue.Enqueue(Event);
+    }
+
+    public void AddSpawnEvent(int ID)
+    {
+        if (ItemList.List[ID] != null)
+        {
+            SpawnQueue.Enqueue(new SpawnEvent(ItemList.List[ID]));
+        }
     }
 
     public void AddSpawnEvent(UpgradeItem item, UpgradeItemButton button = null)
