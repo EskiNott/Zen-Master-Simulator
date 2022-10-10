@@ -27,7 +27,7 @@ public class CoreMachanicSystem : MonoSingleton<CoreMachanicSystem>
     {
         if (Input.GetMouseButtonDown(0))
         {
-            hit = RaycastPhysical();
+            hit = GameManager.RaycastPhysical();
             if (hit.collider.CompareTag("Item"))
             {
                 Dragging = true;
@@ -37,10 +37,11 @@ public class CoreMachanicSystem : MonoSingleton<CoreMachanicSystem>
         else if (Input.GetMouseButtonUp(0) && Dragging && hit.collider.GetComponent<Rigidbody>() != null) 
         {
             Dragging = false;
-            hitSecond = RaycastPhysical();
+            hitSecond = GameManager.RaycastPhysical();
             StopDragging = new Vector3(hitSecond.point.x, StartDragging.y, hitSecond.point.z);
             Push(hit.collider.GetComponent<Rigidbody>(), StartDragging - StopDragging, (StartDragging - StopDragging).magnitude * 300);
-        }else if (Input.GetMouseButton(0) && Dragging)
+        }
+        else if (Input.GetMouseButton(0) && Dragging)
         {
 /*            RaycastHit hitSecond = RaycastPhysical();
             Vector3 MouseWorld = new Vector3(hitSecond.point.x, StartDragging.y, hitSecond.point.z);
@@ -56,7 +57,7 @@ public class CoreMachanicSystem : MonoSingleton<CoreMachanicSystem>
 
     private void ClickToPushMachanic()
     {
-        hit = RaycastPhysical();
+        hit = GameManager.RaycastPhysical();
         if (hit.collider != null)
         {
             GameObject hitObject = hit.collider.gameObject;
@@ -79,13 +80,5 @@ public class CoreMachanicSystem : MonoSingleton<CoreMachanicSystem>
                 }
             }
         }
-    }
-
-    public static RaycastHit RaycastPhysical()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Physics.Raycast((Ray)ray, out hit, float.PositiveInfinity, 3);
-        return hit;
     }
 }
