@@ -5,7 +5,7 @@ public class Timer : MonoBehaviour
 {
     private bool CanStart;
     private bool FinishFlag;
-    private WaitForSeconds WFS;
+    private WaitForSeconds wfs;
 
     public void TimerStart()
     {
@@ -23,7 +23,7 @@ public class Timer : MonoBehaviour
 
     public void SetTime(float Time)
     {
-        WFS = new WaitForSeconds(Time);
+        wfs = new WaitForSeconds(Time);
     }
 
     private void SetState(bool isStop)
@@ -46,7 +46,7 @@ public class Timer : MonoBehaviour
 
     IEnumerator TimeDelay()
     {
-        yield return WFS;
+        yield return wfs;
         SetState(true);
         FinishFlag = true;
     }
