@@ -136,4 +136,12 @@ public class GameManager : MonoSingleton<GameManager>
         }
         return found;
     }
+
+    public static RaycastHit RaycastPhysical()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Physics.Raycast((Ray)ray, out hit, float.PositiveInfinity, 3);
+        return hit;
+    }
 }
