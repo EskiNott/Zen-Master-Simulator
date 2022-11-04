@@ -50,3 +50,4 @@ public class Timer : MonoBehaviour
         SetState(true);
         FinishFlag = true;
     }
+}
